@@ -1,0 +1,8 @@
+app/.cproject
+app/.project
+app/.settings/language.settings.xml
+app/STM32F0DISCOVERY.xml
+modules/.cproject
+modules/.project
+modules/.settings/language.settings.xml
+modules/STM32F0DISCOVERY.xml
