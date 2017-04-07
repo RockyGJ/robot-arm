@@ -4,17 +4,13 @@
 
 
 
-class Date {
-
-public:
-	Date(int, int, int);
+void 	Date(int, int, int);
   void set(int, int, int);
   void print();
   int test;
 
-private:
   int year;
   int month;
   int day;
-};
+
 #endif

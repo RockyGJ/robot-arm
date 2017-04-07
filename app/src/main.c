@@ -1,17 +1,44 @@
-/*
- ============================================================================
- Name        : simple_tasks.c
- Author      : Gertjan Rocks
- Version     :
- Copyright   : Your copyright notice
- Description : Create three simple tasks with most of the os features
- ============================================================================
+/* -----------------------------------------------------------------------------
+ * test.c                                           (c) 2017 Rocks
+ * -----------------------------------------------------------------------------
+ * Author: Gertjan Rocks
+ * Web:    www.gertjanrocks.com
+ * Mail:   gertjanrocks@outlook.com
+ * -----------------------------------------------------------------------------
+ * Description:
+ * -----------------------------------------------------------------------------
+ * Created on: 7 apr. 2017
+ * -----------------------------------------------------------------------------
+ */
+
+
+/* --------------*
+ * Include files *
+ * --------------*
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "os.h"
 #include "motor.h"
+#include "robot_arm.h"
+
+/* -------------------------------*
+ * Constant and macro definitions *
+ * -------------------------------*
+ */
+
+
+/* -----------------*
+ * Type definitions *
+ * -----------------*
+ */
+
+
+/* ---------------------*
+ * File-scope variables *
+ * ---------------------*
+ */
 
 os_task_t task1;
 os_task_t task2;
@@ -23,36 +50,28 @@ os_task_id_t taskID_1, taskID_2, taskID_3;
 
 os_functions_pointers_t function_pointers;
 
+/* ----------------------*
+ * Function declarations *
+ * ----------------------*
+ */
 
 void disable_interrupt(void);
 void enable_interrupt(void);
 void stdio_function(void);
+uint8_t testArray[5];
 
-
-void *operator new(size_t size) {
-	return malloc(size);
-}
-
-void *operator new[](size_t size) {
-	return malloc(size);
-}
-
-void operator delete(void *p) {
-	free(p);
-}
-
-void operator delete[](void *p) {
-	free(p);
-}
+/* ----------------------*
+ * Function definitions  *
+ * ----------------------*
+ */
 
 
 /**
- * Example main function
+ * main function
  * @return
  */
 int main(void) {
 
-	  Date today(1,9,1999);
 
 	//Add functions pointers necessery for interrupt
 	function_pointers.disable_irq = &disable_interrupt;
@@ -77,8 +96,8 @@ int main(void) {
 	task3.task_name = "task3";
 	os_add_task(task3);
 
-	today.set(5,10,1999);
-	today.test = 3;
+//	today.set(5,10,1999);
+//	today.test = 3;
 
 	//Begin thread for 1ms timing
 //	pthread_create(&tid, NULL, &Thread, NULL);
