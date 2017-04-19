@@ -38,8 +38,15 @@ extern "C" {
  */
 
 typedef struct{
-	os_task_t	motor_task;
-	uint8_t 	motor_id;
+	uint8_t 		id;		//!Identifier
+	/* Os settings */
+	os_task_t		task;
+	os_task_id_t	task_id;
+	os_timer_id_t	timer;
+	/* HAL settings */
+	uint8_t pwm_channel;
+	uint8_t dir_channel;
+	uint8_t enable_channel;
 }motor_t;
 
 /* ---------------------*
