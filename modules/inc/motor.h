@@ -1,16 +1,62 @@
+/* -----------------------------------------------------------------------------
+ * motor.c                                           (c) 2017 Rocks
+ * -----------------------------------------------------------------------------
+ * Author: Gertjan Rocks
+ * Web:    www.gertjanrocks.com
+ * Mail:   gertjanrocks@outlook.com
+ * -----------------------------------------------------------------------------
+ * Description: 
+ * -----------------------------------------------------------------------------
+ * Created on: 18 apr. 2017
+ * -----------------------------------------------------------------------------
+ */
 
-#ifndef I2C_CONSOLE_H
-#define I2C_CONSOLE_H
 
+#ifndef INC_MOTOR_C_
+#define INC_MOTOR_C_
 
-
-void 	Date(int, int, int);
-  void set(int, int, int);
-  void print();
-  int test;
-
-  int year;
-  int month;
-  int day;
-
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+/* --------------*
+ * Include files *
+ * --------------*
+ */
+
+#include "os.h"
+
+/* -------------------------------*
+ * Constant and macro definitions *
+ * -------------------------------*
+ */
+
+
+/* -----------------*
+ * Type definitions *
+ * -----------------*
+ */
+
+typedef struct{
+	os_task_t	motor_task;
+	uint8_t 	motor_id;
+}motor_t;
+
+/* ---------------------*
+ * File-scope variables *
+ * ---------------------*
+ */
+
+
+/* ----------------------*
+ * Function declarations *
+ * ----------------------*
+ */
+
+void motor_init(motor_t* motor, uint8_t id);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* INC_MOTOR_C_ */
