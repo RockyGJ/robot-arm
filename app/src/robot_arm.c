@@ -11,7 +11,6 @@
  * -----------------------------------------------------------------------------
  */
 
-
 /* --------------*
  * Include files *
  * --------------*
@@ -26,12 +25,10 @@
  * -------------------------------*
  */
 
-
 /* -----------------*
  * Type definitions *
  * -----------------*
  */
-
 
 /* ---------------------*
  * File-scope variables *
@@ -46,19 +43,17 @@ motor_t arm_axis_4;
 motor_t arm_axis_5;
 motor_t arm_axis_6;
 
-
 /* ----------------------*
  * Function declarations *
  * ----------------------*
  */
-
 
 /* ----------------------*
  * Function definitions  *
  * ----------------------*
  */
 
-void robot_arm_init(void){
+void robot_arm_init(void) {
 	//Let the motor init create tasks for the axis
 	motor_init(&arm_axis_1, 1);
 	motor_init(&arm_axis_2, 2);
@@ -66,6 +61,5 @@ void robot_arm_init(void){
 	motor_init(&arm_axis_4, 4);
 	motor_init(&arm_axis_5, 5);
 	motor_init(&arm_axis_6, 6);
-
 }
 

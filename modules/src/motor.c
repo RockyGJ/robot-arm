@@ -11,7 +11,6 @@
  * -----------------------------------------------------------------------------
  */
 
-
 /* --------------*
  * Include files *
  * --------------*
@@ -34,12 +33,10 @@
  * -----------------*
  */
 
-
 /* ---------------------*
  * File-scope variables *
  * ---------------------*
  */
-
 
 /* ----------------------*
  * Function declarations *
@@ -57,13 +54,12 @@ os_task_return_codes_t motor_task_cb(os_event_t event);
  * @param motor
  * @param id
  */
-void motor_init(motor_t* motor, uint8_t id)
-{
+void motor_init(motor_t* motor, uint8_t id) {
 	//Create a unique task for this motor
 	motor->task.task_cb = &motor_task_cb;
 	motor->task.task_name = "Motor task";
 	//Save the pointer of the motor struct in the identifier field of the task
-	motor->task.identifier = (uint32_t)motor;
+	motor->task.identifier = (uint32_t) motor;
 	//Create the task
 	os_add_task(motor->task);
 	motor->id = id;
@@ -81,16 +77,17 @@ os_task_return_codes_t motor_task_cb(os_event_t event) {
 	//Create a pointer to the motor object
 	motor_t* _motor = 0;
 	//Get the motor object
-	os_get_task_identifier(os_current_task_id(),(uint32_t*)_motor);
+	os_get_task_identifier(os_current_task_id(), (uint32_t*) _motor);
 
 	switch (event) {
 	case os_event_init:
 		//Save task id
 		_motor->task_id = os_current_task_id();
 		//Log the task id
-		os_log(os_log_level_all, "Motor %d with Task id %d is initialized\n\r", _motor->id, _motor->task_id);
+		os_log(os_log_level_all, "Motor %d with Task id %d is initialized\n\r",
+				_motor->id, _motor->task_id);
 		//Subscribe for timer event
-		os_subscribe_for_event(os_event_timer,_motor->task_id);
+		os_subscribe_for_event(os_event_timer, _motor->task_id);
 		//Create a timer with a interval of 1000 millisecond to create timer id.
 		_motor->timer = os_timer_add(1000, os_timer_one_shot);
 		break;
@@ -102,7 +99,7 @@ os_task_return_codes_t motor_task_cb(os_event_t event) {
 		msg.os_msg_id = MOTOR_MSG_STOPPED_ID;
 		msg.data = _motor->id;
 		//Send message
-		os_post_msg(msg,_motor->parant_task, os_msg_priority_normal);
+		os_post_msg(msg, _motor->parant_task, os_msg_priority_normal);
 		break;
 
 	default:
@@ -122,7 +119,8 @@ os_task_return_codes_t motor_task_cb(os_event_t event) {
  * @param in1_channel
  * @param in2_channel
  */
-void motor_open(motor_t* motor, uint8_t pwm_channel, uint8_t in1_channel, uint8_t in2_channel){
+void motor_open(motor_t* motor, uint8_t pwm_channel, uint8_t in1_channel,
+		uint8_t in2_channel) {
 
 	//First save the values to the motor block
 	motor->pwm_channel = pwm_channel;
@@ -142,7 +140,7 @@ void motor_open(motor_t* motor, uint8_t pwm_channel, uint8_t in1_channel, uint8_
  * Stops a motor by disabling the outputs
  * @param motor
  */
-void motor_stop(motor_t* motor){
+void motor_stop(motor_t* motor) {
 	//To stop the motor set both in channels to low
 	gpio_set_pin(motor->in1_channel, false);
 	gpio_set_pin(motor->in2_channel, false);
@@ -159,21 +157,22 @@ void motor_stop(motor_t* motor){
  * @param direction
  * @param dutycyle 0 - 1000
  */
-void motor_simple_run(motor_t* motor, motor_direction_t direction, uint16_t dutycyle){
+void motor_simple_run(motor_t* motor, motor_direction_t direction,
+		uint16_t dutycyle) {
 	//First set the in pins to set the direction
-	if((direction == MOTOR_DIRECTION_CW) && (!motor->invert)){
+	if ((direction == MOTOR_DIRECTION_CW) && (!motor->invert)) {
 		//CW & !invert = in1 high and in2 low
 		gpio_set_pin(motor->in1_channel, true);
 		gpio_set_pin(motor->in1_channel, false);
-	} else if ((direction == MOTOR_DIRECTION_CW) && (motor->invert)){
+	} else if ((direction == MOTOR_DIRECTION_CW) && (motor->invert)) {
 		//CW & invert = in1 low and in2 high
 		gpio_set_pin(motor->in1_channel, false);
 		gpio_set_pin(motor->in1_channel, true);
-	} else 	if((direction == MOTOR_DIRECTION_CCW) && (!motor->invert)){
+	} else if ((direction == MOTOR_DIRECTION_CCW) && (!motor->invert)) {
 		//CCW & !invert = in1 low and in2 high
 		gpio_set_pin(motor->in1_channel, false);
 		gpio_set_pin(motor->in1_channel, true);
-	} else if ((direction == MOTOR_DIRECTION_CCW) && (motor->invert)){
+	} else if ((direction == MOTOR_DIRECTION_CCW) && (motor->invert)) {
 		//CCW & invert = in1 high and in2 low
 		gpio_set_pin(motor->in1_channel, true);
 		gpio_set_pin(motor->in1_channel, false);
@@ -193,21 +192,22 @@ void motor_simple_run(motor_t* motor, motor_direction_t direction, uint16_t duty
  * @param run_time in ms
  * @param task_id
  */
-void motor_run_time(motor_t* motor, motor_direction_t direction, uint16_t dutycyle, uint16_t run_time, os_task_id_t task_id){
+void motor_run_time(motor_t* motor, motor_direction_t direction,
+		uint16_t dutycyle, uint16_t run_time, os_task_id_t task_id) {
 	//First set the in pins to set the direction
-	if((direction == MOTOR_DIRECTION_CW) && (!motor->invert)){
+	if ((direction == MOTOR_DIRECTION_CW) && (!motor->invert)) {
 		//CW & !invert = in1 high and in2 low
 		gpio_set_pin(motor->in1_channel, true);
 		gpio_set_pin(motor->in1_channel, false);
-	} else if ((direction == MOTOR_DIRECTION_CW) && (motor->invert)){
+	} else if ((direction == MOTOR_DIRECTION_CW) && (motor->invert)) {
 		//CW & invert = in1 low and in2 high
 		gpio_set_pin(motor->in1_channel, false);
 		gpio_set_pin(motor->in1_channel, true);
-	} else 	if((direction == MOTOR_DIRECTION_CCW) && (!motor->invert)){
+	} else if ((direction == MOTOR_DIRECTION_CCW) && (!motor->invert)) {
 		//CCW & !invert = in1 low and in2 high
 		gpio_set_pin(motor->in1_channel, false);
 		gpio_set_pin(motor->in1_channel, true);
-	} else if ((direction == MOTOR_DIRECTION_CCW) && (motor->invert)){
+	} else if ((direction == MOTOR_DIRECTION_CCW) && (motor->invert)) {
 		//CCW & invert = in1 high and in2 low
 		gpio_set_pin(motor->in1_channel, true);
 		gpio_set_pin(motor->in1_channel, false);
@@ -229,8 +229,7 @@ void motor_run_time(motor_t* motor, motor_direction_t direction, uint16_t dutycy
  * @param motor
  * @param inverted
  */
-void motor_invert(motor_t* motor, bool inverted)
-{
+void motor_invert(motor_t* motor, bool inverted) {
 	motor->invert = inverted;
 }
 
@@ -239,7 +238,7 @@ void motor_invert(motor_t* motor, bool inverted)
  * @param motor
  * @param frequency
  */
-void motor_set_pwmfreq(motor_t* motor, uint16_t frequency){
+void motor_set_pwmfreq(motor_t* motor, uint16_t frequency) {
 	pwm_change_frequency(motor->pwm_channel, frequency);
 }
 
@@ -248,6 +247,6 @@ void motor_set_pwmfreq(motor_t* motor, uint16_t frequency){
  * @param motor
  * @return
  */
-bool motor_get_running(motor_t* motor){
+bool motor_get_running(motor_t* motor) {
 	return motor->running;
 }

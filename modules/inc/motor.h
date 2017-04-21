@@ -11,7 +11,6 @@
  * -----------------------------------------------------------------------------
  */
 
-
 #ifndef INC_MOTOR_C_
 #define INC_MOTOR_C_
 
@@ -42,12 +41,12 @@ extern "C" {
  * The motor struct is private and should only be changed by the motor
  * block itself. Each motor needs its own motor block
  */
-typedef struct{
-	uint8_t 		id;
+typedef struct {
+	uint8_t id;
 	/* Os settings */
-	os_task_t		task;
-	os_task_id_t	task_id;
-	os_timer_id_t	timer;
+	os_task_t task;
+	os_task_id_t task_id;
+	os_timer_id_t timer;
 	/* HAL settings */
 	uint8_t pwm_channel;
 	uint8_t in1_channel;
@@ -55,22 +54,21 @@ typedef struct{
 	/* Motor settings */
 	bool invert;
 	bool running;
-	os_task_id_t 	parant_task;
-}motor_t;
+	os_task_id_t parant_task;
+} motor_t;
 
 /**
  * Motor direction
  */
-typedef enum{
-	MOTOR_DIRECTION_CW,//!< MOTOR_DIRECTION_CW
-	MOTOR_DIRECTION_CCW//!< MOTOR_DIRECTION_CCW
-}motor_direction_t;
+typedef enum {
+	MOTOR_DIRECTION_CW, //!< MOTOR_DIRECTION_CW
+	MOTOR_DIRECTION_CCW //!< MOTOR_DIRECTION_CCW
+} motor_direction_t;
 
 /* ---------------------*
  * File-scope variables *
  * ---------------------*
  */
-
 
 /* ----------------------*
  * Function declarations *
@@ -95,7 +93,8 @@ void motor_init(motor_t* motor, uint8_t id);
  * @param in1_channel
  * @param in2_channel
  */
-void motor_open(motor_t* motor, uint8_t pwm_channel, uint8_t in1_channel, uint8_t in2_channel);
+void motor_open(motor_t* motor, uint8_t pwm_channel, uint8_t in1_channel,
+		uint8_t in2_channel);
 
 /**
  * Stops a motor by disabling the outputs
@@ -110,7 +109,8 @@ void motor_stop(motor_t* motor);
  * @param direction
  * @param dutycyle 0 - 1000
  */
-void motor_simple_run(motor_t* motor, motor_direction_t direction, uint16_t dutycyle);
+void motor_simple_run(motor_t* motor, motor_direction_t direction,
+		uint16_t dutycyle);
 
 /**
  * Start the motor with a dutycyle and direction for a given time.
@@ -121,7 +121,8 @@ void motor_simple_run(motor_t* motor, motor_direction_t direction, uint16_t duty
  * @param run_time in ms
  * @param task_id
  */
-void motor_run_time(motor_t* motor, motor_direction_t direction, uint16_t dutycyle, uint16_t run_time, os_task_id_t task_id);
+void motor_run_time(motor_t* motor, motor_direction_t direction,
+		uint16_t dutycyle, uint16_t run_time, os_task_id_t task_id);
 
 /**
  * enable of disable the motor invert
