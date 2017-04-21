@@ -23,15 +23,46 @@ extern "C" {
  * --------------*
  */
 
+#include "stdint.h"
+
 /* -------------------------------*
  * Constant and macro definitions *
  * -------------------------------*
  */
 
+enum{
+	ARM_AXIS_1,
+	ARM_AXIS_2,
+	ARM_AXIS_3,
+	ARM_AXIS_4,
+	ARM_AXIS_5,
+	ARM_AXIS_LAST
+};
+
+typedef struct{
+	uint8_t motor_id;
+	uint8_t pwm_channel;
+	uint8_t in1_channel;
+	uint8_t in2_channel;
+}robot_arm_config_t;
+
+/**
+ * Default robot config
+ */
+static const robot_arm_config_t robot_arm_config[ARM_AXIS_LAST] = {
+	/* 	AXES			motor_id,	pwm_channel,	in1_channel, 	in2_channel	*/
+	/* ARM_AXIS_1 */{	1,			0,				0,				1	},
+	/* ARM_AXIS_2 */{	2,			1,				2,				3	},
+	/* ARM_AXIS_3 */{	3,			2,				4,				5	},
+	/* ARM_AXIS_4 */{	4,			3,				6,				7	},
+	/* ARM_AXIS_5 */{	5,			4,				8,				9	},
+};
+
 /* -----------------*
  * Type definitions *
  * -----------------*
  */
+
 
 /* ---------------------*
  * File-scope variables *
