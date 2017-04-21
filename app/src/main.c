@@ -81,7 +81,7 @@ int main(void) {
 	//The robot arm should call all the inits for the modules
 	robot_arm_init();
 	//Open the systick
-	systick_open(os_timer_counter_setting(), &systick_callback);
+	systick_open(os_timer_counter_step_setting(), &systick_callback);
 	//Start os should never return
 	os_main();
 
