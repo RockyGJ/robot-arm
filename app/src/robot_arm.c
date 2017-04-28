@@ -19,6 +19,7 @@
 #include "robot_arm.h"
 #include "os.h"
 #include "motor.h"
+#include "indicators.h"
 
 /* -------------------------------*
  * Constant and macro definitions *
@@ -66,6 +67,8 @@ void robot_arm_init(void) {
 	robotArmTask.task_cb = &robot_task_callback;
 	robotArmTask.task_name = "Robot arm task";
 	os_add_task(robotArmTask);
+	//Init the indicator led task
+	indicators_init();
 }
 
 /**

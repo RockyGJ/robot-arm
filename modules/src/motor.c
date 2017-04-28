@@ -77,7 +77,7 @@ os_task_return_codes_t motor_task_cb(os_event_t event) {
 	//Create a pointer to the motor object
 	motor_t* _motor = 0;
 	//Get the motor object
-	os_get_task_identifier(os_current_task_id(), (uint32_t*) _motor);
+	os_get_task_identifier(os_current_task_id(), (uint32_t*) &_motor);
 
 	switch (event) {
 	case os_event_init:
