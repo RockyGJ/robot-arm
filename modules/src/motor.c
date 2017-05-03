@@ -163,19 +163,19 @@ void motor_simple_run(motor_t* motor, motor_direction_t direction,
 	if ((direction == MOTOR_DIRECTION_CW) && (!motor->invert)) {
 		//CW & !invert = in1 high and in2 low
 		gpio_set_pin(motor->in1_channel, true);
-		gpio_set_pin(motor->in1_channel, false);
+		gpio_set_pin(motor->in2_channel, false);
 	} else if ((direction == MOTOR_DIRECTION_CW) && (motor->invert)) {
 		//CW & invert = in1 low and in2 high
 		gpio_set_pin(motor->in1_channel, false);
-		gpio_set_pin(motor->in1_channel, true);
+		gpio_set_pin(motor->in2_channel, true);
 	} else if ((direction == MOTOR_DIRECTION_CCW) && (!motor->invert)) {
 		//CCW & !invert = in1 low and in2 high
 		gpio_set_pin(motor->in1_channel, false);
-		gpio_set_pin(motor->in1_channel, true);
+		gpio_set_pin(motor->in2_channel, true);
 	} else if ((direction == MOTOR_DIRECTION_CCW) && (motor->invert)) {
 		//CCW & invert = in1 high and in2 low
 		gpio_set_pin(motor->in1_channel, true);
-		gpio_set_pin(motor->in1_channel, false);
+		gpio_set_pin(motor->in2_channel, false);
 	}
 	//After the direction set the dutycyle
 	pwm_change_dutyCyle(motor->pwm_channel, dutycyle);
@@ -194,28 +194,8 @@ void motor_simple_run(motor_t* motor, motor_direction_t direction,
  */
 void motor_run_time(motor_t* motor, motor_direction_t direction,
 		uint16_t dutycyle, uint16_t run_time, os_task_id_t task_id) {
-	//First set the in pins to set the direction
-	if ((direction == MOTOR_DIRECTION_CW) && (!motor->invert)) {
-		//CW & !invert = in1 high and in2 low
-		gpio_set_pin(motor->in1_channel, true);
-		gpio_set_pin(motor->in1_channel, false);
-	} else if ((direction == MOTOR_DIRECTION_CW) && (motor->invert)) {
-		//CW & invert = in1 low and in2 high
-		gpio_set_pin(motor->in1_channel, false);
-		gpio_set_pin(motor->in1_channel, true);
-	} else if ((direction == MOTOR_DIRECTION_CCW) && (!motor->invert)) {
-		//CCW & !invert = in1 low and in2 high
-		gpio_set_pin(motor->in1_channel, false);
-		gpio_set_pin(motor->in1_channel, true);
-	} else if ((direction == MOTOR_DIRECTION_CCW) && (motor->invert)) {
-		//CCW & invert = in1 high and in2 low
-		gpio_set_pin(motor->in1_channel, true);
-		gpio_set_pin(motor->in1_channel, false);
-	}
-	//After the direction set the dutycyle
-	pwm_change_dutyCyle(motor->pwm_channel, dutycyle);
-	//Motor is running
-	motor->running = true;
+	//Start the motor with the simple run
+	motor_simple_run(motor, direction, dutycyle);
 	//Save task to inform motor stopped
 	motor->parant_task = task_id;
 	//Setup the timer for stopping the motor

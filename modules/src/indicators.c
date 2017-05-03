@@ -31,8 +31,8 @@
  * -----------------*
  */
 
-#define HEARTBEAT_LED_B			(5)
-#define HEARTBEAT_LED_G			(6)
+#define HEARTBEAT_LED_B			(7)
+#define HEARTBEAT_LED_G			(8)
 #define HEARTBEAT_LED_INTERVAL	(500)
 
 
