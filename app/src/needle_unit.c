@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
- * robot_arm.cpp                                           (c) 2017 Rocks
+ * needle_unit.cpp                                           (c) 2017 Rocks
  * -----------------------------------------------------------------------------
  * Author: Gertjan Rocks
  * Web:    www.gertjanrocks.com
@@ -48,8 +48,8 @@ motor_t arm_axes[ARM_AXIS_LAST];
 
 os_task_return_codes_t robot_task_callback(os_event_t event);
 
-static void robot_arm_motor_open(void);
-static void robot_arm_test(void);
+static void needle_unit_motor_open(void);
+static void needle_unit_test(void);
 
 /* ----------------------*
  * Function definitions  *
@@ -59,11 +59,11 @@ static void robot_arm_test(void);
 /**
  * Init the robot arm function
  */
-void robot_arm_init(void) {
+void needle_unit_init(void) {
 	uint8_t index;
 	//Let the motor init create tasks for the axis
 	for(index = 0; index < ARM_AXIS_LAST; index++){
-		motor_init(&arm_axes[index], robot_arm_config[index].motor_id);
+		motor_init(&arm_axes[index], needle_unit_config[index].motor_id);
 	}
 
 	//Add the robot arm task
@@ -87,7 +87,7 @@ os_task_return_codes_t robot_task_callback(os_event_t event) {
 		//Subscribe to motor msg
 		os_subscribe_for_event(os_event_msg_pending, os_current_task_id());
 		//Open the necessery functions
-		robot_arm_motor_open();
+		needle_unit_motor_open();
 		motor_run_time(&arm_axes[ARM_AXIS_1],MOTOR_DIRECTION_CCW, 500, 200, os_current_task_id());
 		break;
 
@@ -97,8 +97,8 @@ os_task_return_codes_t robot_task_callback(os_event_t event) {
 		//Check if message is from a motor driver
 		if(msg.os_msg_id == MOTOR_MSG_STOPPED_ID){
 			//Check the motor nmbr
-			if(msg.data == robot_arm_config[ARM_AXIS_1].motor_id){
-				robot_arm_test();
+			if(msg.data == needle_unit_config[ARM_AXIS_1].motor_id){
+				needle_unit_test();
 			}
 		}
 		break;
@@ -112,20 +112,20 @@ os_task_return_codes_t robot_task_callback(os_event_t event) {
 /**
  * Open all the motors and needed function
  */
-void robot_arm_motor_open(void)
+void needle_unit_motor_open(void)
 {
 	uint8_t index;
 	//Set all the motor channels
 	for(index = 0; index < ARM_AXIS_LAST; index++){
-		motor_open(&arm_axes[index], robot_arm_config[index].pwm_channel,
-									 robot_arm_config[index].in1_channel,
-									 robot_arm_config[index].in2_channel);
+		motor_open(&arm_axes[index], needle_unit_config[index].pwm_channel,
+									 needle_unit_config[index].in1_channel,
+									 needle_unit_config[index].in2_channel);
 	}
 }
 
-void robot_arm_test(void)
+void needle_unit_test(void)
 {
-	static test_state = 0;
+	static uint8_t test_state = 0;
 
 	switch(test_state){
 	case 0:

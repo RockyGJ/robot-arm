@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
- * robot_arm.h                                           (c) 2017 Rocks
+ * needle_unit.h                                           (c) 2017 Rocks
  * -----------------------------------------------------------------------------
  * Author: Gertjan Rocks
  * Web:    www.gertjanrocks.com
@@ -11,8 +11,8 @@
  * -----------------------------------------------------------------------------
  */
 
-#ifndef ROBOT_ARM_H_
-#define ROBOT_ARM_H_
+#ifndef NEEDLE_UNIT_H_
+#define NEEDLE_UNIT_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,12 +44,12 @@ typedef struct{
 	uint8_t pwm_channel;
 	uint8_t in1_channel;
 	uint8_t in2_channel;
-}robot_arm_config_t;
+}needle_unit_config_t;
 
 /**
  * Default robot config
  */
-static const robot_arm_config_t robot_arm_config[ARM_AXIS_LAST] = {
+static const needle_unit_config_t needle_unit_config[ARM_AXIS_LAST] = {
 	/* 	AXES			motor_id,	pwm_channel,	in1_channel, 	in2_channel	*/
 	/* ARM_AXIS_1 */{	1,			0,				5,				6	},
 	/* ARM_AXIS_2 */{	2,			1,				9,				10	},
@@ -74,10 +74,10 @@ static const robot_arm_config_t robot_arm_config[ARM_AXIS_LAST] = {
  * ----------------------*
  */
 
-extern void robot_arm_init(void);
+extern void needle_unit_init(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* ROBOT_ARM_H_ */
+#endif /* NEEDLE_UNIT_H_ */

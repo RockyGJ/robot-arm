@@ -21,7 +21,7 @@
 #include "os.h"
 #include "hal.h"
 #include "systick.h"
-#include "robot_arm.h"
+#include "needle_unit.h"
 
 /* -------------------------------*
  * Constant and macro definitions *
@@ -79,7 +79,7 @@ int main(void) {
 	hal_init();
 	//Init the main application cq robot arm
 	//The robot arm should call all the inits for the modules
-	robot_arm_init();
+	needle_unit_init();
 	//Open the systick
 	systick_open(os_timer_counter_step_setting(), &systick_callback);
 	//Start os should never return

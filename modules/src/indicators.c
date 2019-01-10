@@ -31,9 +31,8 @@
  * -----------------*
  */
 
-#define HEARTBEAT_LED_B			(7)
-#define HEARTBEAT_LED_G			(8)
-#define HEARTBEAT_LED_INTERVAL	(500)
+#define HEARTBEAT_LED_R			(0)
+#define HEARTBEAT_LED_INTERVAL	(150)
 
 
 /* ---------------------*
@@ -71,8 +70,7 @@ os_task_return_codes_t indicator_cb(os_event_t event) {
 	switch (event) {
 	case os_event_init:
 		//Init hart-beat leds
-		gpio_open(HEARTBEAT_LED_G, GPIO_MODE_OUTPUT_PUSH_PULL);
-		gpio_open(HEARTBEAT_LED_B, GPIO_MODE_OUTPUT_PUSH_PULL);
+		gpio_open(HEARTBEAT_LED_R, GPIO_MODE_OUTPUT_PUSH_PULL);
 		//Subscribe for timer event
 		os_subscribe_for_event(os_event_timer, os_current_task_id());
 		//Create a timer with a interval of HEARTBEAT_LED_INTERVAL millisecond to create timer id.
@@ -82,12 +80,10 @@ os_task_return_codes_t indicator_cb(os_event_t event) {
 		break;
 
 	case os_event_timer:
-		//Set blue led
-		gpio_set_pin(HEARTBEAT_LED_B, led_state);
 		//Toggle led
 		led_state = !led_state;
-		//Set green led
-		gpio_set_pin(HEARTBEAT_LED_G, led_state);
+		//Set red led
+		gpio_set_pin(HEARTBEAT_LED_R, led_state);
 		break;
 
 	default:
