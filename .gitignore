@@ -6,3 +6,8 @@ modules/.cproject
 modules/.project
 modules/.settings/language.settings.xml
 modules/STM32F0DISCOVERY.xml
+/Debug/
+.settings/language.settings.xml
+.project
+.cproject
+Robot LinkServer Debug.launch
